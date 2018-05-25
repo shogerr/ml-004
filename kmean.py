@@ -1,28 +1,36 @@
 import numpy as np
 
 class kmean:
-    def __init__(self, data, k=2):
+    def __init__(self, data, k=10):
         self.k = k 
         # ingest data
-        self.data = data
+        self.data = data * (1/255)
         # select k random centroids
-        self.c = data[np.random.randint(data.shape[0], size=k), :].astype(np.float)
+        self.c = self.data[np.random.randint(self.data.shape[0], size=k), :]
         # perform initial classification
         self.group()
 
+    def find_cost(self, x, i):
+        return np.linalg.norm(x-self.c[self.groups[i],:])**2
     # determine the current loss value
+    #
     def cost(self):
-        pass
+        return np.array([self.find_cost(v,i) for i,v in enumerate(self.data)]).sum()
 
     # Takes a matrix s of all examples in a group and calculates
     # a centroid vector.
     def find_centroid(self, s):
+        # If the cluster is empty, supply a random example as the centroid
+        if s.shape[0] == 0:
+            return self.data[np.random.randint(self.data.shape[0],size=1), :]
+
         return s.sum(axis=0)*(1/s.shape[0])
 
+    # Takes a feature vector and finds the closest cluster centroid.
     def find_group(self, x):
         d_min = float('inf')
         i = None
-        j = 0 
+        j = 0
         for m in self.c:
             d = np.linalg.norm(x-m)
             if d < d_min: 
@@ -40,9 +48,7 @@ class kmean:
         self.groups = np.apply_along_axis(self.find_group, axis=1, arr=self.data)
 
     def run(self):
-        self.update()
-
-    def train(self):
-        pass
-        # group each example
-
+        for i in range(1, 50):
+            self.update()
+            self.group()
+            print(self.cost())
