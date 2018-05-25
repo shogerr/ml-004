@@ -11,3 +11,7 @@ class pca:
 
 		# calculate covariance matrix
 		self.covariance = np.cov(self.data)
+
+		# calculate eigan-values
+		self.eigan_vals, self.eigan_vecs = np.linalg.eig(self.covariance)
+		print(self.eigan_vals)
