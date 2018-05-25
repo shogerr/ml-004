@@ -8,3 +8,6 @@ class pca:
 
 		# calculate mean
 		self.mean = np.mean(self.data)
+
+		# calculate covariance matrix
+		self.covariance = np.cov(self.data)
