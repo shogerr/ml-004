@@ -1,3 +1,5 @@
 *.swo
 *.swp
+*.csv
+*.png
 __pycache__/
