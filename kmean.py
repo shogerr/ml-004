@@ -1,7 +1,7 @@
 import numpy as np
 
 class kmean:
-    def __init__(self, data, k=10):
+    def __init__(self, data, k=2):
         self.k = k 
         # ingest data
         self.data = data * (1/255)
@@ -48,7 +48,13 @@ class kmean:
         self.groups = np.apply_along_axis(self.find_group, axis=1, arr=self.data)
 
     def run(self):
-        for i in range(1, 50):
+        results = []
+        for i in range(1, 100):
             self.update()
             self.group()
-            print(self.cost())
+            results.append(self.cost())
+            #print('epoch ' + str(i) + ' k=' + str(self.k) + ' ' + str(results[-1]))
+            if len(results) > 2 and results[-2] - results[-1] < .0001:
+                break
+
+        return results
