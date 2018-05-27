@@ -1,6 +1,5 @@
 import numpy as np
 from heapq import nlargest
-from matplotlib import pyplot
 
 class pca:
 
@@ -50,11 +49,6 @@ class pca:
 		#pyplot.imshow(np.reshape(self.mean,(28,28)))
 		#pyplot.show()
 
-		# add together top 10 eigen vecs
-		added_vec = 0
-		for vec in self.top_eigen_vecs:
-			added_vec += vec
-
 		values = self.find_highest_dimensions()
 		#for i in range(len(values)):
 			#print('dimension:', i, 'data vector:', values[i][1], 'value:', values[i][0])
@@ -67,7 +61,6 @@ class pca:
 		# only draws images with highest value
 		# for one of the ten dimensions
 		for vec in self.highest_dim_vecs:
-			#pyplot.imshow(np.reshape(vec*added_vec,(28,28)))
 			pyplot.imshow(np.reshape(np.dot(self.top_eigen_vecs, vec),(5,2)))
 			pyplot.show()
 			input("next")
