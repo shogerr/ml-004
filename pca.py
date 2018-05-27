@@ -23,18 +23,20 @@ class pca:
 		self.top_eigen_vecs = []
 		for index in largest_indexs:
 			self.top_eigen_vecs.append(self.eigen_vecs[index])
+		self.top_eigen_vecs = np.array(self.top_eigen_vecs)
 
 		# find top 10 eigenvectors which only have a single entry in them
 		#count = 0
 		#self.top_eigen_vecs = []
+		#self.dimension_indexs = []
 		#for vec in reversed(self.eigen_vecs):
 			#added = 0
 			#for num in vec:
-				#if num != 0 and num != 1:
+				#if num != 1:
 					#added += num
-			#if added > 0 and len(self.top_eigen_vecs) < 10:
-				#self.top_eigen_vecs.append(self.eigen_vecs[count])
-				#print(count)
+			#if added == 0 and len(self.top_eigen_vecs) < 10:
+				#self.top_eigen_vecs.append(vec)
+				#self.dimension_indexs.append(count)
 			#count += 1
 
 		# draw top 10 eigen vecs
@@ -53,9 +55,23 @@ class pca:
 		for vec in self.top_eigen_vecs:
 			added_vec += vec
 
+		values = self.find_highest_dimensions()
+		#for i in range(len(values)):
+			#print('dimension:', i, 'data vector:', values[i][1], 'value:', values[i][0])
+
+		# get list of vectors with highest values after
+		# eigenvector reduction
+		self.highest_dim_vecs = [self.data[x[1]] for x in values]
+
 		# draw images reduced by eigenvectors
-		for vec in self.data:
-			pyplot.imshow(np.reshape(vec*added_vec,(28,28)))
+		# only draws images with highest value
+		# for one of the ten dimensions
+		for vec in self.highest_dim_vecs:
+			#pyplot.imshow(np.reshape(vec*added_vec,(28,28)))
+			pyplot.imshow(np.reshape(np.dot(self.top_eigen_vecs, vec),(5,2)))
+			pyplot.show()
+			input("next")
+			pyplot.imshow(np.reshape(vec,(28,28)))
 			pyplot.show()
 			input("next")
 
@@ -75,11 +91,12 @@ class pca:
 	# finds vector from original data set with highest values
 	# in top ten eigenvector dimensions
 	def find_highest_dimensions(self):
-		values = {}
-		for index in self.dimension_indexs:
-			values[index] = (0, 0)
+		values = []
+		for i in range(10):
+			values.append((0, 0))
 		for i in range(len(self.data)):
-			for index in self.dimension_indexs:
-				if self.data[i][index] > values[index][0]:
-					values[index] = (self.data[i][index], i)
+			vec = np.dot(self.top_eigen_vecs, self.data[i])
+			for j in range(len(vec)):
+				if vec[j] > values[j][0]:
+					values[j] = (vec[j], i)
 		return values
