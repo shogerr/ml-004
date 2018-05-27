@@ -71,3 +71,15 @@ class pca:
 				column_mean += num
 			column_mean /= len(column)
 			self.mean.append(column_mean)
+
+	# finds vector from original data set with highest values
+	# in top ten eigenvector dimensions
+	def find_highest_dimensions(self):
+		values = {}
+		for index in self.dimension_indexs:
+			values[index] = (0, 0)
+		for i in range(len(self.data)):
+			for index in self.dimension_indexs:
+				if self.data[i][index] > values[index][0]:
+					values[index] = (self.data[i][index], i)
+		return values
