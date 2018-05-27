@@ -1,3 +1,3 @@
 from pca import *
 
-model = pca('unsupervised.txt')
+model = pca('data-1.txt')
