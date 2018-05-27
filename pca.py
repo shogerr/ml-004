@@ -24,6 +24,19 @@ class pca:
 		for index in largest_indexs:
 			self.top_eigen_vecs.append(self.eigen_vecs[index])
 
+		# find top 10 eigenvectors which only have a single entry in them
+		#count = 0
+		#self.top_eigen_vecs = []
+		#for vec in reversed(self.eigen_vecs):
+			#added = 0
+			#for num in vec:
+				#if num != 0 and num != 1:
+					#added += num
+			#if added > 0 and len(self.top_eigen_vecs) < 10:
+				#self.top_eigen_vecs.append(self.eigen_vecs[count])
+				#print(count)
+			#count += 1
+
 		# draw top 10 eigen vecs
 		#for vec in self.top_eigen_vecs:
 			#scaled_vec = [x/max(vec) for x in vec]
@@ -42,7 +55,7 @@ class pca:
 
 		# draw images reduced by eigenvectors
 		for vec in self.data:
-			pyplot.imshow(np.reshape(vec*added_vec,(28,28)), cmap='Greys')
+			pyplot.imshow(np.reshape(vec*added_vec,(28,28)))
 			pyplot.show()
 			input("next")
 
