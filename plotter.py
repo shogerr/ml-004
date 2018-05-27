@@ -7,7 +7,6 @@ def pca_plotter(pca):
 		#scaled_vec = [x/max(vec) for x in vec]
 		#pyplot.imshow(np.reshape(scaled_vec,(28,28)))
 		#pyplot.show()
-		#input("next")
 
 	# draw mean vector
 	#pyplot.imshow(np.reshape(pca.mean,(28,28)))
@@ -19,7 +18,5 @@ def pca_plotter(pca):
 	for vec in pca.highest_dim_vecs:
 		pyplot.imshow(np.reshape(np.dot(pca.top_eigen_vecs, vec),(5,2)))
 		pyplot.show()
-		input("next")
 		pyplot.imshow(np.reshape(vec,(28,28)))
 		pyplot.show()
-		input("next")
