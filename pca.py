@@ -22,6 +22,7 @@ class pca:
 		self.top_eigen_vecs = []
 		for index in largest_indexs:
 			self.top_eigen_vecs.append(self.eigen_vecs[index])
+		# turn list into numpy array
 		self.top_eigen_vecs = np.array(self.top_eigen_vecs)
 
 		# find top 10 eigenvectors which only have a single entry in them
@@ -38,17 +39,6 @@ class pca:
 				#self.dimension_indexs.append(count)
 			#count += 1
 
-		# draw top 10 eigen vecs
-		#for vec in self.top_eigen_vecs:
-			#scaled_vec = [x/max(vec) for x in vec]
-			#pyplot.imshow(np.reshape(scaled_vec,(28,28)))
-			#pyplot.show()
-			#input("next")
-
-		# draw mean vector
-		#pyplot.imshow(np.reshape(self.mean,(28,28)))
-		#pyplot.show()
-
 		values = self.find_highest_dimensions()
 		#for i in range(len(values)):
 			#print('dimension:', i, 'data vector:', values[i][1], 'value:', values[i][0])
@@ -57,16 +47,6 @@ class pca:
 		# eigenvector reduction
 		self.highest_dim_vecs = [self.data[x[1]] for x in values]
 
-		# draw images reduced by eigenvectors
-		# only draws images with highest value
-		# for one of the ten dimensions
-		for vec in self.highest_dim_vecs:
-			pyplot.imshow(np.reshape(np.dot(self.top_eigen_vecs, vec),(5,2)))
-			pyplot.show()
-			input("next")
-			pyplot.imshow(np.reshape(vec,(28,28)))
-			pyplot.show()
-			input("next")
 
 	# unused
 	# calculate mean of variables (columns)
