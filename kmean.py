@@ -53,7 +53,6 @@ class kmean:
             self.update()
             self.group()
             results.append(self.cost())
-            #print('epoch ' + str(i) + ' k=' + str(self.k) + ' ' + str(results[-1]))
             if len(results) > 2 and results[-2] - results[-1] < .0001:
                 break
 
